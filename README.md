@@ -29,6 +29,8 @@
 
 ## app 프로젝트 실행 방법
 
-1.
-2.
-3.
+1. 가장 상위 폴더 디렉토리로 이동
+2. 필요한 라이브러리 설치 : pip install -r requirements.txt 
+3. 실행 : uvicorn app.main:app --reload
+4. 웹 브라우저를 켜서 : http://127.0.0.1:8000/static/index.html
+5. 기능 살펴보기
