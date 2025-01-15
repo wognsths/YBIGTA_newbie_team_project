@@ -26,3 +26,9 @@
 
 #### merged_신소연.png
 ![merged_신소연.png](github/merged_신소연.png)
+
+## app 프로젝트 실행 방법
+
+1.
+2.
+3.
