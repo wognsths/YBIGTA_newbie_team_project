@@ -28,9 +28,9 @@ class UserService:
         """
         user = self.repo.get_user_by_email(user_login.email)
         if not user:
-            raise ValueError("User not Found")
+            raise ValueError("User not Found.")
         if user.password != user_login.password:
-            raise ValueError("Invalid PW")
+            raise ValueError("Invalid ID/PW")
         return user
 
     def register_user(self, new_user: User) -> User:
@@ -66,7 +66,7 @@ class UserService:
         """
         user = self.repo.get_user_by_email(email)
         if not user:
-            raise ValueError("User not Found")
+            raise ValueError("User not Found.")
         return self.repo.delete_user(user)
 
     def update_user_pwd(self, user_update: UserUpdate) -> User:
@@ -84,6 +84,6 @@ class UserService:
         """
         user = self.repo.get_user_by_email(user_update.email)
         if not user:
-            raise ValueError("User not Found")
+            raise ValueError("User not Found.")
         user.password = user_update.new_password
         return self.repo.save_user(user)
