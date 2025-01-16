@@ -130,6 +130,7 @@
             document.getElementById("login-email-error").textContent = '';
             document.getElementById("login-password-error").textContent = '';
 
+            // [변경 1] 이메일 형식 검증 코드(정규식 등)는 제거하고, 빈 값만 확인
             if (!email) {
                 document.getElementById('login-email-error').textContent = "Email is required.";
                 hasError = true;
@@ -159,7 +160,7 @@
                 return response.json();
             })
             .then(data => {
-                alert(`Registration successful! Welcome, ${data.data.username}.`);
+                alert(`Login successful! Welcome, ${data.data.username}.`);
                 userEmail = email; // 로그인 성공 시 이메일 저장
                 document.getElementById('username').textContent = `Hello, ${data.data.username}!`; // 사용자 이름 표시
                 document.getElementById('login-screen').style.display = 'none';
@@ -180,6 +181,7 @@
             document.getElementById("register-password-error").textContent = '';
             document.getElementById("register-username-error").textContent = '';
 
+            // [변경 2] 이메일 형식 검증을 없애고, 빈 값만 확인
             if (!email) {
                 document.getElementById('register-email-error').textContent = "Email is required.";
                 hasError = true;
@@ -213,7 +215,11 @@
                 }
                 return response.json();
             })
-            .then(() => alert(`Registration successful! Welcome, ${data.username}.`))
+            // [변경 3] .then(data => ...) 구조로 받아서 data를 안전하게 사용
+            .then(data => {
+                // 예: 서버가 { data: { username: "..."} } 형태로 응답한다 가정
+                alert(`Registration successful! Welcome, ${data.data.username}.`);
+            })
             .catch(error => alert(`Registration failed: ${error.message}`));
         }
 
