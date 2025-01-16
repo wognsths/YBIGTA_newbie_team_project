@@ -1,6 +1,7 @@
 # YBIGTA_newbie_team_project
 
 ## 팀소개
+6조입니다. 화이팅화이팅!!
 
 ## 팀원 소개
 
