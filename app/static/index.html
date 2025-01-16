@@ -9,35 +9,67 @@
             font-family: Arial, sans-serif;
             margin: 20px;
             text-align: center;
+            background-image: url('https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNjUyOXwwfDF8c2VhcmNofDF8fG5hdHVyZXxlbnwwfHx8fDE2ODM5MjMwNTQ&ixlib=rb-1.2.1&q=80&w=1920');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            color: #333;
         }
         .container {
             max-width: 600px;
             margin: 0 auto;
-            border: 1px solid #ccc;
-            border-radius: 8px;
+            border: 1px solid #ddd;
+            border-radius: 12px;
             padding: 20px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background-color:rgba(255, 255, 255, 0.9);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
         h1 {
-            color: #333;
+            color: #4CAF50;
+        }
+        h2 {
+            color: #5D5C61;
         }
         form {
             margin: 20px 0;
         }
         input {
-            padding: 10px;
-            margin: 5px 0;
-            width: 80%;
+            padding: 12px;
+            margin: 10px 0;
+            width: 90%;
             font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.1);
+        }
+        input:focus {
+            outline: none;
+            border: 2px solid #f9d342;
         }
         button {
-            padding: 10px 20px;
+            padding: 12px 20px;
             margin: 10px;
             font-size: 16px;
             cursor: pointer;
+            border: none;
+            border-radius: 8px;
+            background-color: #4CAF50;
+            color: white;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #45A049;
         }
         .section {
             margin-bottom: 30px;
+        }
+        #logged-in-screen {
+            display: none;
+        }
+        .error {
+            color: #f08080;
+            font-size: 0.9em;
+            margin: -5px 0 10px 0;
         }
     </style>
 </head>
@@ -82,6 +114,7 @@
     <script>
         let userEmail = null;
 
+        // 로그인 함수: 이메일과 비밀번호를 받아서 로그인 시도
         function loginUser() {
             const email = document.getElementById('login-email').value;
             const password = document.getElementById('login-password').value;
@@ -108,6 +141,7 @@
             .catch(error => alert(`Login failed: ${error.message}`));
         }
 
+        // 회원가입 함수: 이메일, 비밀번호, 사용자명을 받아서 회원가입 처리
         function registerUser() {
             const email = document.getElementById('register-email').value;
             const password = document.getElementById('register-password').value;
@@ -130,6 +164,7 @@
             .catch(error => alert(`Registration failed: ${error.message}`));
         }
 
+        // 비밀번호 업데이트 함수: 새 비밀번호를 받아서 업데이트 처리
         function updatePassword() {
             const newPassword = document.getElementById('update-password').value;
 
@@ -142,14 +177,24 @@
             })
             .then(response => {
                 if (!response.ok) {
-                    return response.json().then(error => { throw new Error(error.detail); });
+                    // 응답이 OK가 아닐 경우, 오류 메시지를 JSON 형식으로 처리
+                    return response.text().then(errorText => {
+                        try {
+                            const error = JSON.parse(errorText); // JSON 파싱 시도
+                            throw new Error(error.detail || 'Unknown error');
+                        } catch (e) {
+                            // JSON 파싱 실패 시, 기본 오류 메시지 사용
+                            throw new Error('Password update failed: ' + errorText);
+                        }
+                    });
                 }
                 return response.json();
             })
             .then(() => alert(`Password successfully updated!`)) // 성공 메시지
-            .catch(error => alert(`Password update failed: ${error.message}`));
+            .catch(error => alert(error.message)); // 상세 오류 메시지
         }
 
+        // 계정 삭제 함수: 현재 로그인된 사용자의 계정을 삭제
         function deleteUser() {
             if (!userEmail) {
                 alert("No user is logged in.");
