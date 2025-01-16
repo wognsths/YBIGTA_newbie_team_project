@@ -80,7 +80,9 @@
             <h2>Login</h2>
             <form id="login-form">
                 <input type="email" id="login-email" placeholder="Email" required><br>
+                <div class="error" id="login-email-error"></div>
                 <input type="password" id="login-password" placeholder="Password" required><br>
+                <div class="error" id="login-password-error"></div>
                 <button type="button" onclick="loginUser()">Login</button>
             </form>
         </div>
@@ -88,8 +90,11 @@
             <h2>Register</h2>
             <form id="register-form">
                 <input type="email" id="register-email" placeholder="Email" required><br>
+                <div class="error" id="register-email-error"></div>
                 <input type="password" id="register-password" placeholder="Password" required><br>
+                <div class="error" id="register-password-error"></div>
                 <input type="text" id="register-username" placeholder="Username" required><br>
+                <div class="error" id="register-username-error"></div>
                 <button type="button" onclick="registerUser()">Register</button>
             </form>
         </div>
@@ -101,6 +106,7 @@
             <h2>Update Password</h2>
             <form id="update-password-form">
                 <input type="password" id="update-password" placeholder="New Password" required><br>
+                <div class="error" id="update-password-error"></div>
                 <button type="button" onclick="updatePassword()">Update Password</button>
             </form>
         </div>
@@ -118,6 +124,26 @@
         function loginUser() {
             const email = document.getElementById('login-email').value;
             const password = document.getElementById('login-password').value;
+            const emailRegEx = /^[A-Za-z0-9]([-_.]?[A-Za-z0-9])*@[A-Za-z0-9]([-_.]?[A-Za-z0-9])*\.[A-Za-z]{2,3}$/;
+            
+            let hasError = false;
+            document.getElementById("login-email-error").textContent = '';
+            document.getElementById("login-password-error").textContent = '';
+
+            if (!email) {
+                document.getElementById('login-email-error').textContent = "Email is required.";
+                hasError = true;
+            } else if (!emailRegEx.test(email)) {
+                document.getElementById('login-email-error').textContent = "Invalid email format.";
+                hasError = true;
+            }
+
+            if (!password) {
+                document.getElementById('login-password-error').textContent = "Password is required.";
+                hasError = true;
+            }
+
+            if (hasError) return;
 
             fetch('/api/user/login', {
                 method: 'POST',
@@ -133,8 +159,9 @@
                 return response.json();
             })
             .then(data => {
+                alert(`Registration successful! Welcome, ${data.data.username}.`);
                 userEmail = email; // 로그인 성공 시 이메일 저장
-                document.getElementById('username').textContent = `Hello, ${data.username}!`; // 사용자 이름 표시
+                document.getElementById('username').textContent = `Hello, ${data.data.username}!`; // 사용자 이름 표시
                 document.getElementById('login-screen').style.display = 'none';
                 document.getElementById('logged-in-screen').style.display = 'block';
             })
@@ -146,6 +173,32 @@
             const email = document.getElementById('register-email').value;
             const password = document.getElementById('register-password').value;
             const username = document.getElementById('register-username').value;
+            const emailRegEx = /^[A-Za-z0-9]([-_.]?[A-Za-z0-9])*@[A-Za-z0-9]([-_.]?[A-Za-z0-9])*\.[A-Za-z]{2,3}$/;
+
+            let hasError = false;
+            document.getElementById("register-email-error").textContent = '';
+            document.getElementById("register-password-error").textContent = '';
+            document.getElementById("register-username-error").textContent = '';
+
+            if (!email) {
+                document.getElementById('register-email-error').textContent = "Email is required.";
+                hasError = true;
+            } else if (!emailRegEx.test(email)) {
+                document.getElementById('register-email-error').textContent = "Invalid email format.";
+                hasError = true;
+            }
+
+            if (!password) {
+                document.getElementById('register-password-error').textContent = "Password is required.";
+                hasError = true;
+            }
+
+            if (!password) {
+                document.getElementById('register-username-error').textContent = "Username is required.";
+                hasError = true;
+            }
+
+            if (hasError) return;
 
             fetch('/api/user/register', {
                 method: 'POST',
@@ -160,13 +213,23 @@
                 }
                 return response.json();
             })
-            .then(() => alert(`Registration successful! Welcome, ${username}.`)) // 성공 메시지에 사용자 이름 표시
+            .then(() => alert(`Registration successful! Welcome, ${data.username}.`))
             .catch(error => alert(`Registration failed: ${error.message}`));
         }
 
         // 비밀번호 업데이트 함수: 새 비밀번호를 받아서 업데이트 처리
         function updatePassword() {
             const newPassword = document.getElementById('update-password').value;
+
+            let hasError = false;
+            document.getElementById("update-password-error").textContent = '';
+
+            if (!newPassword) {
+                document.getElementById('update-password-error').textContent = "Password is required.";
+                hasError = true;
+            }
+
+            if (hasError) return;
 
             fetch('/api/user/update-password', {
                 method: 'PUT',
