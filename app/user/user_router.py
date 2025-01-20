@@ -20,7 +20,7 @@ def login_user(
     except ValueError as e:
         if str(e) == "User not Found.":
             raise HTTPException(status_code=400, detail="User not Found.")
-        elif str(e) == "Invalid PW":
+        elif str(e) == "Invalid ID/PW":
             raise HTTPException(status_code=400, detail="Invalid password.")
         else:
             raise HTTPException(status_code=400, detail="An unknown error occurred.")
