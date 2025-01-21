@@ -13,13 +13,14 @@ import time
 import os
 import sys
 
+
 class ImdbCrawler(BaseCrawler):
     def __init__(self, output_dir: str):
         super().__init__(output_dir)
         self.base_url = "https://www.imdb.com/title/tt6751668/reviews/?ref_=tt_ururv_sm&spoilers=EXCLUDE&sort=user_rating%2Cdesc"
         self.driver = None
         self.reviews = []
-        self.logger = setup_logger(log_file='application.log')  # Logger 설정
+        self.logger = setup_logger(log_file='review_analysis/crawling/utils/imdb.log')  # Logger 설정
     
     def start_browser(self):
         """Start a visible Chrome browser."""
@@ -61,7 +62,7 @@ class ImdbCrawler(BaseCrawler):
         while True:
             # Scroll down
             self.browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-            time.sleep(1)  # Wait for content to load
+            time.sleep(2)  # Wait for content to load
             
             # Check if new content has been loaded
             new_height = self.browser.execute_script("return document.body.scrollHeight")
@@ -80,11 +81,13 @@ class ImdbCrawler(BaseCrawler):
 
                 try:
                     star_rating = review.find_element(By.XPATH, f"{BOX_PATH}[{i+1}]/div[1]/div[1]/div[1]/span/span[1]").text
+                    title = review.find_element(By.XPATH, f"{BOX_PATH}[{i+1}]/div[1]/div[1]/div[2]/div/a/h3").text
                     content = review.find_element(By.XPATH, f"{BOX_PATH}[{i+1}]/div[1]/div[1]/div[3]/div/div/div").text
                     date = review.find_element(By.XPATH, f"{BOX_PATH}[{i+1}]/div[2]/ul/li[2]").text
                     
                     self.reviews.append({
                         "star_rating": star_rating,
+                        "title": title,
                         "content": content,
                         "date": date
                     })
