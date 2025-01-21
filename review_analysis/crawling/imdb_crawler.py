@@ -56,18 +56,14 @@ class ImdbCrawler(BaseCrawler):
         
         # Step 2: Click the "all" button to load all reviews
 
-        # Wait for the button to load
-        try:
-            all_button = WebDriverWait(self.driver, 10).until(
-                EC.element_to_be_clickable(
-                    (By.CSS_SELECTOR, "span.ipc-see-more.sc-32dca5b4-0.exNxuq.chained-see-more-button.sc-f09bd1f5-2 > button")
-                )
-            )
-            self.driver.execute_script("arguments[0].click();", all_button)  # Use JavaScript click
-            self.logger.info("Clicked the 'All Reviews' button.")
-        except Exception as e:
-            self.logger.error(f"Failed to click the 'All Reviews' button: {e}")
-            return 
+        # # Wait for the button to load
+        # try:
+        #     all_button = self.browser.find_element(By.XPATH, '/html/body/div[2]/main/div/section/div/section/div/div[1]/section[1]/div[3]/div/span[2]/button')
+        #     all_button.click()
+        #     self.logger.info("Clicked the 'All Reviews' button.")
+        # except Exception as e:
+        #     self.logger.error(f"Failed to click the 'All Reviews' button: {e}")
+        #     return 
         
         # Step 3: Scroll down to load all reviews
         self.logger.info("Scrolling to load all reviews...")
@@ -87,15 +83,15 @@ class ImdbCrawler(BaseCrawler):
         # Step 4: Find and extract review elements
         try:
             BOX_PATH = "/html/body/div[2]/main/div/section/div/section/div/div[1]/section[1]/article"
-            review_elements = self.browser.find_elements(By.XPATH, BOX_PATH)#(By.CLASS_NAME, "sc-d59f276d-1 euAsTr user-review-item")
+            review_elements = self.browser.find_elements(By.XPATH, '//article[@class="sc-d59f276d-1 euAsTr user-review-item"]')#(By.CLASS_NAME, "sc-d59f276d-1 euAsTr user-review-item")
             self.logger.info(f"Found {len(review_elements)} reviews.")
 
             for i, review in enumerate(review_elements):
 
                 try:
-                    star_rating = review.find_element(By.XPATH, f"{BOX_PATH}[i+1]/div[1]/div[1]/div[1]/span/span[1]").text
-                    content = review.find_element(By.CLASS_NAME, f"{BOX_PATH}[i+1]/div[1]/div[1]/div[3]/div/div/div").text
-                    date = review.find_element(By.CLASS_NAME, f"{BOX_PATH}[i+1]/div[2]/ul/li[2]").text
+                    star_rating = review.find_element(By.XPATH, f"{BOX_PATH}[{i+1}]/div[1]/div[1]/div[1]/span/span[1]").text
+                    content = review.find_element(By.XPATH, f"{BOX_PATH}[{i+1}]/div[1]/div[1]/div[3]/div/div/div").text
+                    date = review.find_element(By.XPATH, f"{BOX_PATH}[{i+1}]/div[2]/ul/li[2]").text
                     
                     self.reviews.append({
                         "star_rating": star_rating,
