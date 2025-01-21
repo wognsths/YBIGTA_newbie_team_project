@@ -1,8 +1,11 @@
 from argparse import ArgumentParser
 from typing import Dict, Type
-from review_analysis.crawling.base_crawler import BaseCrawler
-from review_analysis.crawling.example_crawler import ExampleCrawler
-from review_analysis.crawling.imdb_crawler import ImdbCrawler
+# from review_analysis.crawling.base_crawler import BaseCrawler
+# from review_analysis.crawling.example_crawler import ExampleCrawler
+# from review_analysis.crawling.imdb_crawler import ImdbCrawler
+from base_crawler import BaseCrawler
+from example_crawler import ExampleCrawler
+from imdb_crawler import ImdbCrawler
 import sys
 import os
 
