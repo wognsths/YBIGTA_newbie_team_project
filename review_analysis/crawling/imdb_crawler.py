@@ -1,5 +1,6 @@
 # from review_analysis.crawling.base_crawler import BaseCrawler
-import logging
+# from review_analysis.utils.logger import setup_logger
+from utils.logger import setup_logger
 from base_crawler import BaseCrawler
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -8,6 +9,7 @@ from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.keys import Keys
 import pandas as pd
 import time
 import os
@@ -16,20 +18,10 @@ import sys
 class ImdbCrawler(BaseCrawler):
     def __init__(self, output_dir: str):
         super().__init__(output_dir)
-        self.base_url = "https://www.imdb.com/title/tt6751668/reviews/?ref_=tt_ururv_sm&spoilers=EXCLUDE"
+        self.base_url = "https://www.imdb.com/title/tt6751668/reviews/?ref_=tt_ururv_sm&spoilers=EXCLUDE&sort=user_rating%2Cdesc"
         self.driver = None
         self.reviews = []
-        self.logger = self.setup_logger()  # Logger 설정
-
-    def setup_logger(self):
-        """Logger 설정 함수"""
-        logger = logging.getLogger(self.__class__.__name__)  # 클래스 이름을 로거 이름으로 사용
-        logger.setLevel(logging.INFO)
-        handler = logging.StreamHandler(sys.stdout)  # 콘솔에 출력
-        formatter = logging.Formatter("[%(levelname)s] %(asctime)s - %(message)s")
-        handler.setFormatter(formatter)
-        logger.addHandler(handler)
-        return logger
+        self.logger = setup_logger(log_file='application.log')  # Logger 설정
     
     def start_browser(self):
         """Start a visible Chrome browser."""
@@ -56,14 +48,14 @@ class ImdbCrawler(BaseCrawler):
         
         # Step 2: Click the "all" button to load all reviews
 
-        # # Wait for the button to load
-        # try:
-        #     all_button = self.browser.find_element(By.XPATH, '/html/body/div[2]/main/div/section/div/section/div/div[1]/section[1]/div[3]/div/span[2]/button')
-        #     all_button.click()
-        #     self.logger.info("Clicked the 'All Reviews' button.")
-        # except Exception as e:
-        #     self.logger.error(f"Failed to click the 'All Reviews' button: {e}")
-        #     return 
+        # Wait for the button to load
+        try:
+            all_button = self.browser.find_element(By.XPATH, '/html/body/div[2]/main/div/section/div/section/div/div[1]/section[1]/div[3]/div/span[2]/button')
+            all_button.send_keys(Keys.ENTER)
+            self.logger.info("Clicked the 'All Reviews' button.")
+        except Exception as e:
+            self.logger.error(f"Failed to click the 'All Reviews' button: {e}")
+            return 
         
         # Step 3: Scroll down to load all reviews
         self.logger.info("Scrolling to load all reviews...")
@@ -71,7 +63,7 @@ class ImdbCrawler(BaseCrawler):
         while True:
             # Scroll down
             self.browser.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-            time.sleep(2)  # Wait for content to load
+            time.sleep(1)  # Wait for content to load
             
             # Check if new content has been loaded
             new_height = self.browser.execute_script("return document.body.scrollHeight")
@@ -98,8 +90,9 @@ class ImdbCrawler(BaseCrawler):
                         "content": content,
                         "date": date
                     })
+                    self.logger.info(f"review{i+1} extracted")
                 except Exception as e:
-                    self.logger.error(f"Failed to extract review data: {e}")
+                    self.logger.error(f"Failed to extract review data: no rating info")
         except Exception as e:
             self.logger.error(f"Failed to find review elements: {e}")
         
