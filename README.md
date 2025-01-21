@@ -35,3 +35,6 @@
 3. 실행 : uvicorn app.main:app --reload
 4. 웹 브라우저를 켜서 : http://127.0.0.1:8000/static/index.html
 5. 기능 살펴보기
+
+## crawling code 실행 방법
+python review_analysis/crawling/main.py -o database --all
