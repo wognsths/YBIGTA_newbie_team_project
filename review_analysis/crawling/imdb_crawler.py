@@ -92,7 +92,7 @@ class ImdbCrawler(BaseCrawler):
                         "content": content,
                         "date": date
                     })
-                    self.logger.info(f"review{i+1} extracted")
+                    # self.logger.info(f"review{i+1} extracted")
                 except Exception as e:
                     self.logger.error(f"Failed to extract review data: no rating info")
         except Exception as e:
