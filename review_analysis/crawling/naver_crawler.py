@@ -66,7 +66,7 @@ class NaverCrawler(BaseCrawler):
             self.logger.info("==========================================================")
             self.logger.info(f"[{review_type.upper()} / {sort_type.upper()}] 크롤링 시작")
             self.logger.info("==========================================================")
-=======
+
 
 
             if review_type == "viewer" and sort_type == "like":
