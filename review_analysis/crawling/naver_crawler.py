@@ -1,5 +1,6 @@
 from bs4 import BeautifulSoup
 
+from review_analysis.crawling.utils.logger import setup_logger
 from review_analysis.crawling.base_crawler import BaseCrawler
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
@@ -8,12 +9,13 @@ from selenium.webdriver.common.by import By
 import pandas as pd
 
 import time
+import os
 
 class NaverCrawler(BaseCrawler):
     def __init__(self, output_dir: str):
         super().__init__(output_dir)
         self.base_url = 'https://search.naver.com/search.naver?where=nexearch&sm=tab_etc&mra=bkEw&pkid=68&os=5664043&qvt=0&query=%EC%98%81%ED%99%94%20%EA%B8%B0%EC%83%9D%EC%B6%A9%20%EA%B4%80%EB%9E%8C%ED%8F%89'
-        
+        self.logger = setup_logger(log_file='review_analysis/crawling/utils/naver.log')
 
         self.review_combinations = [
             ("viewer", "like"),
@@ -25,6 +27,8 @@ class NaverCrawler(BaseCrawler):
         self.start_browser()
 
     def start_browser(self):
+        '''Start a visible Chrome browser.'''
+        self.logger.info("Starting the browser...")
         chrome_options = Options()
         chrome_options.add_experimental_option("detach", True)
         chrome_options.add_experimental_option("excludeSwitches",["enable-logging"])
@@ -37,14 +41,26 @@ class NaverCrawler(BaseCrawler):
             self.driver.maximize_window()
         except:
             pass
+        self.logger.info("Browser started successfully!")
 
     def scrape_reviews(self):
+        '''
+        **Args
+        - 크롤링 대상: 실관람객(viewer) / 네티즌(netizen) 리뷰
+        - 정렬: 추천 순(like) / 최신 순(latest)
+        - 데이터: 작성일, 별점, 댓글, 추천/비추천 수
+
+        **Description
+        - 페이지를 불러오고 필수 버튼을 클릭한 후, 스크롤을 내려 모든 리뷰를 로드합니다.
+          BeautifulSoup으로 HTML을 파싱하여 데이터를 추출합니다.
+        '''
+        
         all_reviews_result = []
 
         for review_type, sort_type in self.review_combinations:
-            print("==========================================================")
-            print(f"[{review_type.upper()} / {sort_type.upper()}] 크롤링 시작")
-            print("==========================================================")
+            self.logger.info("==========================================================")
+            self.logger.info(f"[{review_type.upper()} / {sort_type.upper()}] 크롤링 시작")
+            self.logger.info("==========================================================")
 
             if review_type == "viewer" and sort_type == "like":
                 self.driver.get(self.base_url)
@@ -54,7 +70,7 @@ class NaverCrawler(BaseCrawler):
                 try:
                     self.driver.find_element(By.XPATH, '//*[@id="main_pack"]/div[3]/div[2]/div/div/div[4]/div[2]/div[2]/button').click() # 스포일러 방지 버튼 
                 except Exception as e:
-                    print(f"[ERROR] Failed to click spoiler include button: {e}")
+                    self.logger.info(f"[ERROR] Failed to click spoiler include button: {e}")
 
                 scrollable_div = self.driver.find_element(
                     By.XPATH, '//*[@id="main_pack"]/div[3]/div[2]/div/div/div[4]/div[4]'
@@ -66,10 +82,10 @@ class NaverCrawler(BaseCrawler):
 
                 try:
                     self.driver.find_element(By.XPATH, '//*[@id="main_pack"]/div[3]/div[2]/div/div/div[4]/div[2]/div[1]/div/ul/li[2]/a/span').click() # 최신순 버튼
-                    time.sleep(1)
+                    time.sleep(2)
                     self.driver.find_element(By.XPATH, '//*[@id="main_pack"]/div[3]/div[2]/div/div/div[4]/div[2]/div[2]/button').click() # 스포일러 방지 버튼 
                 except Exception as e:
-                    print(f"[ERROR] Failed to click buttons: {e}")
+                    self.logger.info(f"[ERROR] Failed to click buttons: {e}")
                 scrollable_div = self.driver.find_element(
                     By.XPATH, '//*[@id="main_pack"]/div[3]/div[2]/div/div/div[4]/div[4]'
                 )
@@ -80,10 +96,10 @@ class NaverCrawler(BaseCrawler):
 
                 try:
                     self.driver.find_element(By.XPATH, '//*[@id="main_pack"]/div[3]/div[2]/div/div/div[1]/div/div/ul/li[2]/a/span').click() # 네티즌 버튼
-                    time.sleep(1)
+                    time.sleep(2)
                     self.driver.find_element(By.XPATH, '//*[@id="main_pack"]/div[3]/div[2]/div/div/div[5]/div[2]/div[2]/button').click() # 스포일러 방지 버튼
                 except Exception as e:
-                    print(f"[ERROR] Failed to click buttons: {e}")
+                    self.logger.info(f"[ERROR] Failed to click buttons: {e}")
                 scrollable_div = self.driver.find_element(
                     By.XPATH, '//*[@id="main_pack"]/div[3]/div[2]/div/div/div[5]/div[4]'
                 )
@@ -94,12 +110,12 @@ class NaverCrawler(BaseCrawler):
 
                 try:
                     self.driver.find_element(By.XPATH, '//*[@id="main_pack"]/div[3]/div[2]/div/div/div[1]/div/div/ul/li[2]/a/span').click() # 네티즌 버튼
-                    time.sleep(1)
+                    time.sleep(2)
                     self.driver.find_element(By.XPATH, '//*[@id="main_pack"]/div[3]/div[2]/div/div/div[5]/div[2]/div[1]/div/ul/li[2]/a/span').click() # 최신순 버튼
-                    time.sleep(1)
+                    time.sleep(2)
                     self.driver.find_element(By.XPATH, '//*[@id="main_pack"]/div[3]/div[2]/div/div/div[5]/div[2]/div[2]/button').click() # 스포일러 방지 버튼
                 except Exception as e:
-                    print(f"[ERROR] Failed to click buttons: {e}")
+                    self.logger.info(f"[ERROR] Failed to click buttons: {e}")
                 scrollable_div = self.driver.find_element(
                     By.XPATH, '//*[@id="main_pack"]/div[3]/div[2]/div/div/div[5]/div[4]'
                 )
@@ -120,7 +136,7 @@ class NaverCrawler(BaseCrawler):
             soup = BeautifulSoup(self.driver.page_source, 'html.parser')
             data_rows = soup.find_all("li", class_="area_card _item")
 
-            print(f"총 {len(data_rows)}개의 리뷰 발견")
+            self.logger.info(f"총 {len(data_rows)}개의 리뷰 발견")
 
             combo_reviews = []
             for row in data_rows:
@@ -149,12 +165,19 @@ class NaverCrawler(BaseCrawler):
 
             all_reviews_result.extend(combo_reviews)
 
-        print("\n\n===== 4가지 케이스 크롤링 완료 =====")
-        print(f"총 리뷰 수: {len(all_reviews_result)}")
+        self.logger.info("\n\n===== 4가지 케이스 크롤링 완료 =====")
+        self.logger.info(f"총 리뷰 수: {len(all_reviews_result)}")
 
         self.df = pd.DataFrame(all_reviews_result)
 
     def save_to_database(self):
+        '''중복되는 데이터 제거 후 csv 저장'''
+        if not self.reviews:
+            self.logger.info("저장할 리뷰가 없습니다.")
+            return
+        
+        output_path = os.path.join(self.output_dir, "reviews_naver.csv")
         self.df = self.df.drop_duplicates(subset = ["comment"])
-        self.df.to_csv(".\\database\\Movie.csv", index = False)
-        print(f"중복 제거 후 총 리뷰 수: {self.df.shape[0]}")
+        self.df.to_csv(output_path, index = False, encoding="utf-8-sig")
+        self.logger.info(f"중복 제거 후 총 리뷰 수: {self.df.shape[0]}")
+        self.logger.info(f"리뷰가 다음 경로에 저장되었습니다.: {output_path}")
