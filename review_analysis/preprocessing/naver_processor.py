@@ -81,19 +81,23 @@ class NaverProcessor(BaseDataProcessor):
 
     def feature_engineering(self):
         '''
+        파생 변수 생성: 날짜에 대한 요일 값
+
         리뷰 데이터에 대한 Feature Engineering 수행
             리뷰 데이터를 임베딩하여 벡터화하고, 특정 키워드(카테고리)에 대한 유사도를 계산하여
             각 리뷰가 어느 카테고리에 가까운지를 판별함
 
         주요 과정:
-            1. 학습된 Sentence Transformer 모델을 사용하여 리뷰 데이터를 임베딩(512차원 벡터)으로 변환
-            2. 사전 정의된 카테고리(예: Masterpiece, Social Commentary 등)와 관련된 문장을 벡터화
-            3. 각 리뷰와 카테고리 벡터 간 코사인 유사도를 계산하여 해당 리뷰가 어느 카테고리에 속하는지 분석
-            4. 최종적으로 임베딩 벡터(512차원) 및 카테고리별 유사도를 원본 데이터프레임(self.df)에 추가
+            2. 학습된 Sentence Transformer 모델을 사용하여 리뷰 데이터를 임베딩(512차원 벡터)으로 변환
+            3. 사전 정의된 카테고리(예: Masterpiece, Social Commentary 등)와 관련된 문장을 벡터화
+            4. 각 리뷰와 카테고리 벡터 간 코사인 유사도를 계산하여 해당 리뷰가 어느 카테고리에 속하는지 분석
+            5. 최종적으로 임베딩 벡터(512차원) 및 카테고리별 유사도를 원본 데이터프레임(self.df)에 추가
 
         출력:
             - 원본 데이터(self.df)에 512차원 리뷰 임베딩 및 카테고리별 유사도 점수 추가
         '''
+        # 요일 값 변수 추가
+        self.df["weekday"] = pd.to_datetime(self.df["writing_date"]).apply(lambda x: x.weekday())
 
         # Sentence Transformer 모델 로드
         model_name = 'sentence-transformers/distiluse-base-multilingual-cased-v2'
