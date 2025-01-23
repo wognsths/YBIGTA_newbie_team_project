@@ -38,7 +38,7 @@ class NaverCrawler(BaseCrawler):
         super().__init__(output_dir)
         self.base_url = 'https://search.naver.com/search.naver?where=nexearch&sm=tab_etc&mra=bkEw&pkid=68&os=5664043&qvt=0&query=%EC%98%81%ED%99%94%20%EA%B8%B0%EC%83%9D%EC%B6%A9%20%EA%B4%80%EB%9E%8C%ED%8F%89'
 
-        self.logger = setup_logger(log_file='./utils/naver.log')
+        self.logger = setup_logger(log_file='review_analysis/crawling/utils/imdb.log')
 
 
         # 크롤링할 리뷰 유형과 정렬 기준 조합
