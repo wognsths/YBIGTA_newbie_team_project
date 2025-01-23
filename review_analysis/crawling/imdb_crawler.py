@@ -23,7 +23,7 @@ class ImdbCrawler(BaseCrawler):
         self.base_url = "https://www.imdb.com/title/tt6751668/reviews/?ref_=tt_ururv_sm&spoilers=EXCLUDE&sort=user_rating%2Cdesc"
         self.driver = None
         self.reviews: List[Dict[str, str]] = []
-        self.logger = setup_logger(log_file='review_analysis/crawling/utils/imdb.log')  # Logger 설정
+        self.logger = setup_logger(log_file='./utils/imdb.log')  # Logger 설정
     
     def start_browser(self):
         """Start a visible Chrome browser."""
