@@ -61,11 +61,12 @@
 ## EDA
 
 1. 분포 파악
-   - 네이버와 IMDB 리뷰의 평점 분포 파악
-   <img src="review_analysis/plots/네이버%20vs%20IMDb%20별점%20분포%20비교.png" width="600">
-   - 네이버와 IMDB 리뷰의 텍스트 길이 분포 파악
-   <img src="review_analysis/plots/사이트%20별%20리뷰%20단어%20개수%20비교.png" width="600">
-   - 날짜 분포 파악
+- 네이버와 IMDB 리뷰의 평점 분포 파악
+<img src="review_analysis/plots/네이버%20vs%20IMDb%20별점%20분포%20비교.png" width="600">
+- 네이버와 IMDB 리뷰의 텍스트 길이 분포 파악
+<img src="review_analysis/plots/사이트%20별%20리뷰%20단어%20개수%20비교.png" width="600">
+- 날짜 분포 파악
+<img src="review_analysis/plots/사이트%20별%20요일별%20리뷰%20개수%20비교.png" width="600">
    
 2. 이상치 파악
    - 별점 범위 벗어난 값
