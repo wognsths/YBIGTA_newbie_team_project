@@ -61,9 +61,36 @@
 1. 네이버 영화 리뷰
 2. IMDB 영화 리뷰
 
-![IMDB_자주등장단어_긍정리뷰.png](review_analysis/plots/IMDb 리뷰 자주 등장하는 단어 - 긍정적 리뷰.png)
-![IMDB_자주등장단어_부정리뷰.png](review_analysis/plots/IMDb 리뷰 자주 등장하는 단어 - 긍정적 리뷰.png)
-![IMDB_자주등장단어_전체리뷰.png](review_analysis/plots/IMDb 리뷰 자주 등장하는 단어 - 전체 리뷰.png)
+![IMDb 리뷰 자주 등장하는 단어 - 긍정적 리뷰.png](review_analysis/plots/IMDb 리뷰 자주 등장하는 단어 - 긍정적 리뷰.png)
+![IMDb 리뷰 자주 등장하는 단어 - 부정적 리뷰.png](review_analysis/plots/IMDb 리뷰 자주 등장하는 단어 - 부정적 리뷰.png)
+![IMDb 리뷰 자주 등장하는 단어 - 전체.png](review_analysis/plots/IMDb 리뷰 자주 등장하는 단어 - 전체.png)
+
+
+IMDb 리뷰 자주 등장하는 단어 - 긍정적 리뷰.png
+crawler 주석 업데이트 / naver_processor / plot 더 추가
+1 hour ago
+IMDb 리뷰 자주 등장하는 단어 - 부정적 리뷰.png
+crawler 주석 업데이트 / naver_processor / plot 더 추가
+1 hour ago
+IMDb 리뷰 자주 등장하는 단어 - 전체.png
+crawler 주석 업데이트 / naver_processor / plot 더 추가
+1 hour ago
+네이버 vs IMDb 별점 분포 비교.png
+plot 폴더 추가
+3 hours ago
+네이버 리뷰 자주 등장하는 단어 - 긍정적 리뷰.png
+crawler 주석 업데이트 / naver_processor / plot 더 추가
+1 hour ago
+네이버 리뷰 자주 등장하는 단어 - 부정적 리뷰.png
+crawler 주석 업데이트 / naver_processor / plot 더 추가
+1 hour ago
+네이버 리뷰 자주 등장하는 단어 - 전체.png
+crawler 주석 업데이트 / naver_processor / plot 더 추가
+1 hour ago
+네이버 리뷰 키워드 별 평점 분포.png
+plot 폴더 추가
+3 hours ago
+평점 추이에 대한 시계열 분석.png
 
 ## preprocessing code 실행 방법
 1. 터미널 위치를 crawling 폴더로 이동
