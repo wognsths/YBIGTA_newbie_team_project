@@ -111,6 +111,8 @@
 <img src="review_analysis/plots/IMDb%20리뷰%20자주%20등장하는%20단어%20-%20부정적%20리뷰.png" width="600">
     - 전체 평점에 대한 텍스트 빈도
 <img src="review_analysis/plots/IMDb%20리뷰%20자주%20등장하는%20단어%20-%20전체.png" width="600">
+    - 자주 등장하는 키워드에 대한 평점 분포
+<img src="review_analysis/plots/IMDb%20리뷰%20키워드%20별%20평점%20분포.png" width="600">
 
 
 ### 시계열 분석
