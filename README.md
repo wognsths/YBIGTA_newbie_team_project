@@ -62,11 +62,14 @@
 
 1. 분포 파악
 - 네이버와 IMDB 리뷰의 평점 분포 파악
-    <img src="review_analysis/plots/네이버%20vs%20IMDb%20별점%20분포%20비교.png" width="600">
+<img src="review_analysis/plots/네이버%20vs%20IMDb%20별점%20분포%20비교.png" width="600">
+네이버와 imbd 모두에서 U-shape의 분포를 띄고 있어 공통적으로 평점 시스템이 다소 극단화되어 있는 것을 확인할 수 있다. 네이버 리뷰의 경우 그 경향이 더 짙은데, 왜냐하면 8, 9점 리뷰의 비율이 IMDb에 비해 낮기 때문이다.
 - 네이버와 IMDB 리뷰의 텍스트 길이 분포 파악
-  <img src="review_analysis/plots/사이트%20별%20리뷰%20단어%20개수%20비교.png" width="600">
+<img src="review_analysis/plots/사이트%20별%20리뷰%20단어%20개수%20비교.png" width="600">
+로그 변환을 했음에도 IMDb의 텍스트 길이가 네이버에 비해 높은 것을 알 수 있다. 텍스트를 직접 비교했을 때도 실제로 IMDb의 리뷰는 주장과 근거의 측면에서 "문장"의 짜임새가 더욱 부각되었더.
 - 날짜 분포 파악
-  <img src="review_analysis/plots/요일%20별%20리뷰%20수%20비교.png" width="600">
+<img src="review_analysis/plots/요일%20별%20리뷰%20수%20비교.png" width="600">
+IMDb의 경우 요일과 리뷰 개수와의 상관관계가 유의미하다고 말할 수 없다. 반면 네이버 리뷰의 경우 목요일에 리뷰의 수가 많은데, 수요일이 "문화인의 날"이라서 그 다음 날짜인 목요일에 평론이 많을 수 있다는 추측을 할 수 있다. 그러나 리뷰 작성률이 서비스 이용 시간이 지날수록 줄어든다는 통념을 생각하면, 이 결과에 대한 추가 조사가 필요하다.
    
 2. 이상치 파악
    - 별점 범위 벗어난 값
@@ -115,25 +118,28 @@
 ##### 텍스트 비교 분석
 
 ### 1. 네이버 영화 리뷰
-   - 평점 5 이상의 리뷰에 대한 텍스트 빈도
-        <img src="review_analysis/plots/네이버%20리뷰%20자주%20등장하는%20단어%20-%20긍정적%20리뷰.png" width="600">
-   - 평점 5 이하의 리뷰에 대한 텍스트 빈도
-        <img src="review_analysis/plots/네이버%20리뷰%20자주%20등장하는%20단어%20-%20부정적%20리뷰.png" width="600">
-    - 전체 평점에 대한 텍스트 빈도
-        <img src="review_analysis/plots/네이버%20리뷰%20자주%20등장하는%20단어%20-%20전체.png" width="600">
-    - 자주 등장하는 키워드에 대한 평점 분포
-        <img src="review_analysis/plots/네이버%20리뷰%20키워드%20별%20평점%20분포.png" width="600">
+- 평점 5 이상의 리뷰에 대한 텍스트 빈도
+<img src="review_analysis/plots/네이버%20리뷰%20자주%20등장하는%20단어%20-%20긍정적%20리뷰.png" width="600">
+- 평점 5 이하의 리뷰에 대한 텍스트 빈도
+<img src="review_analysis/plots/네이버%20리뷰%20자주%20등장하는%20단어%20-%20부정적%20리뷰.png" width="600">
+- 전체 평점에 대한 텍스트 빈도
+<img src="review_analysis/plots/네이버%20리뷰%20자주%20등장하는%20단어%20-%20전체.png" width="600">
+- 자주 등장하는 키워드에 대한 평점 분포
+<img src="review_analysis/plots/네이버%20리뷰%20키워드%20별%20평점%20분포.png" width="600">
 
 ### 2. IMDB 영화 리뷰
-    - 평점 5 이상의 리뷰에 대한 텍스트 빈도
-        <img src="review_analysis/plots/IMDb%20리뷰%20자주%20등장하는%20단어%20-%20긍정적%20리뷰.png" width="600">
-    - 평점 5 이하의 리뷰에 대한 텍스트 빈도
-        <img src="review_analysis/plots/IMDb%20리뷰%20자주%20등장하는%20단어%20-%20부정적%20리뷰.png" width="600">
-    - 전체 평점에 대한 텍스트 빈도
-        <img src="review_analysis/plots/IMDb%20리뷰%20자주%20등장하는%20단어%20-%20전체.png" width="600">
-    - 자주 등장하는 키워드에 대한 평점 분포
-        <img src="review_analysis/plots/IMDb%20리뷰%20키워드%20별%20평점%20분포.png" width="600">
+- 평점 5 이상의 리뷰에 대한 텍스트 빈도
+<img src="review_analysis/plots/IMDb%20리뷰%20자주%20등장하는%20단어%20-%20긍정적%20리뷰.png" width="600">
+- 평점 5 이하의 리뷰에 대한 텍스트 빈도
+<img src="review_analysis/plots/IMDb%20리뷰%20자주%20등장하는%20단어%20-%20부정적%20리뷰.png" width="600">
+- 전체 평점에 대한 텍스트 빈도
+<img src="review_analysis/plots/IMDb%20리뷰%20자주%20등장하는%20단어%20-%20전체.png" width="600">
+- 자주 등장하는 키워드에 대한 평점 분포
+<img src="review_analysis/plots/IMDb%20리뷰%20키워드%20별%20평점%20분포.png" width="600">
 
+### 3. 결론
+- 자주 등장하는 키워드에 대한 평점 분포
+- 
 
 ### 시계열 분석
 - 두 사이트의 모든 데이터를 통합한 데이터에 대한 시간별 평점 추이
