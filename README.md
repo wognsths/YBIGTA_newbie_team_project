@@ -61,9 +61,9 @@
 1. 네이버 영화 리뷰
 2. IMDB 영화 리뷰
 
-  - ![IMDB_자주등장단어_긍정리뷰.png](review_analysis/plots/IMDb 리뷰 자주 등장하는 단어 - 긍정적 리뷰.png)
-  - ![IMDB_자주등장단어_부정리뷰.png](review_analysis/plots/IMDb 리뷰 자주 등장하는 단어 - 긍정적 리뷰.png)
-  - ![IMDB_자주등장단어_전체리뷰.png](review_analysis/plots/IMDb 리뷰 자주 등장하는 단어 - 전체 리뷰.png)
+![IMDB_자주등장단어_긍정리뷰.png](review_analysis/plots/IMDb 리뷰 자주 등장하는 단어 - 긍정적 리뷰.png)
+![IMDB_자주등장단어_부정리뷰.png](review_analysis/plots/IMDb 리뷰 자주 등장하는 단어 - 긍정적 리뷰.png)
+![IMDB_자주등장단어_전체리뷰.png](review_analysis/plots/IMDb 리뷰 자주 등장하는 단어 - 전체 리뷰.png)
 
 ## preprocessing code 실행 방법
 1. 터미널 위치를 crawling 폴더로 이동
