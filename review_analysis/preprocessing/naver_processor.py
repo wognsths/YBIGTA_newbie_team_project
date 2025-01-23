@@ -228,7 +228,7 @@ class NaverProcessor(BaseDataProcessor):
         self.df = pd.concat([self.df, df_results, df_embeddings], axis=1)
 
     def save_to_database(self):
-        output_path = os.path.join(self.output_dir, "processed_reviews_naver.csv")
+        output_path = os.path.join(self.output_dir, "preprocessed_reviews_naver.csv")
         self.df.to_csv(output_path, index = False, encoding="utf-8-sig")
         
         # 저장 완료 메시지 출력
