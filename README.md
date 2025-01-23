@@ -41,7 +41,7 @@
 
 #### 영화 : 기생충
 1. 네이버 영화 리뷰(국내)
-    - 크롤링한 사이트의 링크 : "https://search.naver.com/search.naver?query=영화 기생충 관람평"
+    - 크롤링한 사이트의 링크 : "https://search.naver.com/search.naver?query=영화%20기생충%20관람평"
     - columns(데이터 형식) : review_type(str), sort_type(str), writing_date(str), star_rating(str), comment(str), upvote(int), downvote(int)
     - 개수 : 1092개
 
@@ -62,16 +62,15 @@
 1. 네이버 영화 리뷰
 2. IMDB 영화 리뷰
 
-![IMDb 리뷰 자주 등장하는 단어 - 긍정적 리뷰.png]("review_analysis/plots/IMDb 리뷰 자주 등장하는 단어 - 긍정적 리뷰.png")
-![IMDb 리뷰 자주 등장하는 단어 - 부정적 리뷰.png](review_analysis/plots/IMDb 리뷰 자주 등장하는 단어 - 부정적 리뷰.png)
-![IMDb 리뷰 자주 등장하는 단어 - 전체.png](review_analysis/plots/IMDb 리뷰 자주 등장하는 단어 - 전체.png)
-네이버 vs IMDb 별점 분포 비교.png
-네이버 리뷰 자주 등장하는 단어 - 긍정적 리뷰.png
-네이버 리뷰 자주 등장하는 단어 - 부정적 리뷰.png
-IMDb 리뷰 자주 등장하는 단어 - 긍정적 리뷰.png
-네이버 리뷰 자주 등장하는 단어 - 전체.png
-네이버 리뷰 키워드 별 평점 분포.png
-평점 추이에 대한 시계열 분석.png
+![IMDb 리뷰 자주 등장하는 단어 - 긍정적 리뷰](review_analysis/plots/IMDb%20리뷰%20자주%20등장하는%20단어%20-%20긍정적%20리뷰.png)
+![IMDb 리뷰 자주 등장하는 단어 - 부정적 리뷰](review_analysis/plots/IMDb%20리뷰%20자주%20등장하는%20단어%20-%20부정적%20리뷰.png)
+![IMDb 리뷰 자주 등장하는 단어 - 전체](review_analysis/plots/IMDb%20리뷰%20자주%20등장하는%20단어%20-%20전체.png)
+![네이버 vs IMDb 별점 분포 비교](review_analysis/plots/네이버%20vs%20IMDb%20별점%20분포%20비교.png)
+![네이버 리뷰 자주 등장하는 단어 - 긍정적 리뷰](review_analysis/plots/네이버%20리뷰%20자주%20등장하는%20단어%20-%20긍정적%20리뷰.png)
+![네이버 리뷰 자주 등장하는 단어 - 부정적 리뷰](review_analysis/plots/네이버%20리뷰%20자주%20등장하는%20단어%20-%20부정적%20리뷰.png)
+![네이버 리뷰 자주 등장하는 단어 - 전체](review_analysis/plots/네이버%20리뷰%20자주%20등장하는%20단어%20-%20전체.png)
+![네이버 리뷰 키워드 별 평점 분포](review_analysis/plots/네이버%20리뷰%20키워드%20별%20평점%20분포.png)
+![평점 추이에 대한 시계열 분석](review_analysis/plots/평점%20추이에%20대한%20시계열%20분석.png)
 
 
 
