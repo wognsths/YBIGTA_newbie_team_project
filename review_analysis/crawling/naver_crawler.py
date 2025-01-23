@@ -12,11 +12,32 @@ import time
 import os
 
 class NaverCrawler(BaseCrawler):
+    '''
+    네이버 영화 리뷰 크롤러
+
+    기능
+    - 네이버 검색을 통해 특정 영화 리뷰를 크롤링
+    - 실관람객(viewer) / 네티즌(netizen) 리뷰 수집
+    - 추천순(like) / 최신순(latest) 정렬 기준 적용 가능
+    - 스크롤을 내려 모든 리뷰를 로드한 후 HTML을 파싱하여 데이터 추출
+    - 크롤링한 데이터를 중복 제거 후 CSV로 저장
+    '''
     def __init__(self, output_dir: str):
+        '''
+        NaverCrawler의 초기화 메서드
+
+        Args:
+        - output_dir (str): 크롤링한 데이터를 저장할 디렉토리
+
+        Attributes:
+        - base_url (str): 네이버 영화 리뷰 페이지 URL
+        - logger (Logger): 크롤링 로그 기록을 위한 Logger 객체
+        '''
         super().__init__(output_dir)
         self.base_url = 'https://search.naver.com/search.naver?where=nexearch&sm=tab_etc&mra=bkEw&pkid=68&os=5664043&qvt=0&query=%EC%98%81%ED%99%94%20%EA%B8%B0%EC%83%9D%EC%B6%A9%20%EA%B4%80%EB%9E%8C%ED%8F%89'
-        self.logger = setup_logger(log_file='review_analysis/crawling/utils/naver.log')
+        self.logger = setup_logger(log_file='./utils/naver.log')
 
+        # 크롤링할 리뷰 유형과 정렬 기준 조합
         self.review_combinations = [
             ("viewer", "like"),
             ("viewer", "latest"),
@@ -27,7 +48,7 @@ class NaverCrawler(BaseCrawler):
         self.start_browser()
 
     def start_browser(self):
-        '''Start a visible Chrome browser.'''
+        '''크롬 브라우저 실행 및 네이버 영화 페이지 로드'''
         self.logger.info("Starting the browser...")
         chrome_options = Options()
         chrome_options.add_experimental_option("detach", True)
@@ -45,14 +66,14 @@ class NaverCrawler(BaseCrawler):
 
     def scrape_reviews(self):
         '''
-        **Args
+        Args
         - 크롤링 대상: 실관람객(viewer) / 네티즌(netizen) 리뷰
         - 정렬: 추천 순(like) / 최신 순(latest)
         - 데이터: 작성일, 별점, 댓글, 추천/비추천 수
 
-        **Description
-        - 페이지를 불러오고 필수 버튼을 클릭한 후, 스크롤을 내려 모든 리뷰를 로드합니다.
-          BeautifulSoup으로 HTML을 파싱하여 데이터를 추출합니다.
+        Description
+        - 페이지를 불러오고 필수 버튼을 클릭한 후, 스크롤을 내려 모든 리뷰를 로드
+          BeautifulSoup으로 HTML을 파싱하여 데이터를 추출
         '''
         
         all_reviews_result = []
@@ -133,11 +154,13 @@ class NaverCrawler(BaseCrawler):
                     break
                 prev_height = curr_height
 
+            # BeautifulSoup으로 페이지 HTML 파싱
             soup = BeautifulSoup(self.driver.page_source, 'html.parser')
             data_rows = soup.find_all("li", class_="area_card _item")
 
             self.logger.info(f"총 {len(data_rows)}개의 리뷰 발견")
 
+            # 리뷰 데이터 추출
             combo_reviews = []
             for row in data_rows:
                 date_tag = row.find("dd", class_="this_text_normal")
@@ -172,10 +195,6 @@ class NaverCrawler(BaseCrawler):
 
     def save_to_database(self):
         '''중복되는 데이터 제거 후 csv 저장'''
-        if not self.reviews:
-            self.logger.info("저장할 리뷰가 없습니다.")
-            return
-        
         output_path = os.path.join(self.output_dir, "reviews_naver.csv")
         self.df = self.df.drop_duplicates(subset = ["comment"])
         self.df.to_csv(output_path, index = False, encoding="utf-8-sig")
