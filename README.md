@@ -92,12 +92,27 @@ IMDb의 경우 요일과 리뷰 개수와의 상관관계가 유의미하다고 
 
 1. 네이버 영화 리뷰
    - 결측치 처리
-   - 이상치 처리
-   - 텍스트 데이터 전처리
-   - 파생 변수 1가지 이상 생성
-   - 텍스트 벡터화
+     내용이 존재하지 않는 경우의 데이터를 제거
 
-2. IMDB 영화 리뷰
+   - 이상치 처리
+     리뷰 글자 수가 평균 + 2.5 * 표준편차를 초과하는 경우 이상치로 간주
+     이상치인 경우 문장 중에서 가장 긴 문장만 남김
+     
+   - 텍스트 데이터 전처리
+
+   - 파생 변수 1가지 이상 생성
+     1. 날짜에 대한 요일 값
+     2. 리뷰 데이터에 대한 5가지 카테고리 분석
+     - 학습된 sentence transformer 모델을 사용하여 리뷰 데이터를 임베딩 변환
+     - 사전에 정의된 카테고리(영화의 평가에 관한 카테고리: Masterpiece, Social Commentary, Suspense & Thrill, Overrated, Uncomfortable)와 관련된 문장 벡터화
+     - 각 리뷰와 카테고리 벡터 간 코사인 유사도 계산하여 해당 리뷰가 어느 카테고리에 속하는지 확인할 수 있도록 함
+   
+   - 텍스트 벡터화
+     - 이미 학습된 언어 모델로 리뷰 문장에 대한 벡터화
+     - distiluse-base-multilingual-cased-v2
+     - https://huggingface.co/sentence-transformers/distiluse-base-multilingual-cased-v2
+
+1. IMDB 영화 리뷰
    
     - 결측치 처리  
       IMDB 영화 리뷰 데이터의 평점(`star_rating`) 컬럼은 크롤링 시 평점이 없는 데이터를 제외하고 수집하였기 때문에 결측치가 존재하지 않습니다.  
