@@ -62,11 +62,11 @@
 
 1. 분포 파악
 - 네이버와 IMDB 리뷰의 평점 분포 파악
-<img src="review_analysis/plots/네이버%20vs%20IMDb%20별점%20분포%20비교.png" width="600">
+    <img src="review_analysis/plots/네이버%20vs%20IMDb%20별점%20분포%20비교.png" width="600">
 - 네이버와 IMDB 리뷰의 텍스트 길이 분포 파악
-<img src="review_analysis/plots/사이트%20별%20리뷰%20단어%20개수%20비교.png" width="600">
+    <img src="review_analysis/plots/사이트%20별%20리뷰%20단어%20개수%20비교.png" width="600">
 - 날짜 분포 파악
-<img src="review_analysis/plots/요일%20별%20리뷰%20수%20비교.png" width="600">
+    <img src="review_analysis/plots/요일%20별%20리뷰%20수%20비교.png" width="600">
    
 2. 이상치 파악
    - 별점 범위 벗어난 값
@@ -114,24 +114,25 @@
 
 ##### 텍스트 비교 분석
 
-1. 네이버 영화 리뷰
+### 1. 네이버 영화 리뷰
    - 평점 5 이상의 리뷰에 대한 텍스트 빈도
-<img src="review_analysis/plots/네이버%20리뷰%20자주%20등장하는%20단어%20-%20긍정적%20리뷰.png" width="600">
+        <img src="review_analysis/plots/네이버%20리뷰%20자주%20등장하는%20단어%20-%20긍정적%20리뷰.png" width="600">
    - 평점 5 이하의 리뷰에 대한 텍스트 빈도
-<img src="review_analysis/plots/네이버%20리뷰%20자주%20등장하는%20단어%20-%20부정적%20리뷰.png" width="600">
+        <img src="review_analysis/plots/네이버%20리뷰%20자주%20등장하는%20단어%20-%20부정적%20리뷰.png" width="600">
     - 전체 평점에 대한 텍스트 빈도
-<img src="review_analysis/plots/네이버%20리뷰%20자주%20등장하는%20단어%20-%20전체.png" width="600">
+        <img src="review_analysis/plots/네이버%20리뷰%20자주%20등장하는%20단어%20-%20전체.png" width="600">
     - 자주 등장하는 키워드에 대한 평점 분포
-<img src="review_analysis/plots/네이버%20리뷰%20키워드%20별%20평점%20분포.png" width="600">
-2. IMDB 영화 리뷰
+        <img src="review_analysis/plots/네이버%20리뷰%20키워드%20별%20평점%20분포.png" width="600">
+
+### 2. IMDB 영화 리뷰
     - 평점 5 이상의 리뷰에 대한 텍스트 빈도
-<img src="review_analysis/plots/IMDb%20리뷰%20자주%20등장하는%20단어%20-%20긍정적%20리뷰.png" width="600">
+        <img src="review_analysis/plots/IMDb%20리뷰%20자주%20등장하는%20단어%20-%20긍정적%20리뷰.png" width="600">
     - 평점 5 이하의 리뷰에 대한 텍스트 빈도
-<img src="review_analysis/plots/IMDb%20리뷰%20자주%20등장하는%20단어%20-%20부정적%20리뷰.png" width="600">
+        <img src="review_analysis/plots/IMDb%20리뷰%20자주%20등장하는%20단어%20-%20부정적%20리뷰.png" width="600">
     - 전체 평점에 대한 텍스트 빈도
-<img src="review_analysis/plots/IMDb%20리뷰%20자주%20등장하는%20단어%20-%20전체.png" width="600">
+        <img src="review_analysis/plots/IMDb%20리뷰%20자주%20등장하는%20단어%20-%20전체.png" width="600">
     - 자주 등장하는 키워드에 대한 평점 분포
-<img src="review_analysis/plots/IMDb%20리뷰%20키워드%20별%20평점%20분포.png" width="600">
+        <img src="review_analysis/plots/IMDb%20리뷰%20키워드%20별%20평점%20분포.png" width="600">
 
 
 ### 시계열 분석
