@@ -41,14 +41,15 @@
 
 #### 영화 : 기생충
 1. 네이버 영화 리뷰(국내)
-  - 크롤링한 사이트의 링크 : "https://search.naver.com/search.naver?sm=tab_hty.top&where=nexearch&ssc=tab.nx.all&query=%EC%98%81%ED%99%94+%EA%B8%B0%EC%83%9D%EC%B6%A9+%EA%B4%80%EB%9E%8C%ED%8F%89&oquery=%EC%98%81%ED%99%94+%EA%B8%B0%EC%83%9D%EC%B6%A9+%EA%B4%80%EB%9E%8C%ED%8F%89%27&tqi=iH4Yfdqo1e8sseUNrBRssssss0Z-072431"
-  - 데이터 형식 : review_type(str), sort_type(str), writing_date(str), star_rating(str), comment(str), upvote(int), downvote(int) 의 컬럼으로 구성됨
-  - 개수 : 1092개
+    - 크롤링한 사이트의 링크 : 'https://search.naver.com/search.naver?query=영화 기생충 관람평"
+    - columns(데이터 형식) : review_type(str), sort_type(str), writing_date(str), star_rating(str), comment(str), upvote(int), downvote(int)
+    - 개수 : 1092개
 
 2. IMDB 영화 리뷰(해외)
-  - 크롤링한 사이트의 링크 : "https://www.imdb.com/title/tt6751668/reviews/?ref_=tt_ururv_sm&spoilers=EXCLUDE&sort=user_rating%2Cdesc"
-  - 데이터 형식 : star_rating(int),title(str),content(str),date(str)의 컬럼으로 구성됨
-  - 개수 : 2977개
+    - 크롤링한 사이트의 링크 : "https://www.imdb.com/title/tt6751668/reviews/?ref_=tt_ururv_sm"
+        - 스포일러 리뷰는 모두 제거하고 가져옴
+    - columns(데이터 형식) : star_rating(int),title(str),content(str),date(str)의 컬럼으로 구성됨
+    - 개수 : 2977개
 
 
 ## crawling code 실행 방법
