@@ -3,8 +3,8 @@ name: Deploy to EC2
 on:
   push:
     branches:
-      - main
-      
+      - jhshon_code
+
 jobs:
   build_and_push:
     name: Build and Push Docker Image
