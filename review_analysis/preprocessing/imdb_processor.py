@@ -1,11 +1,11 @@
 import os
 import pandas as pd
-from datetime import datetime
-from sklearn.feature_extraction.text import TfidfVectorizer
+import datetime
+# from sklearn.feature_extraction.text import TfidfVectorizer
 from review_analysis.preprocessing.base_processor import BaseDataProcessor
 import re
-import nltk
-from nltk.corpus import stopwords 
+# import nltk
+# from nltk.corpus import stopwords
 
 class ImdbProcessor(BaseDataProcessor):
     """
@@ -116,4 +116,37 @@ class ImdbProcessor(BaseDataProcessor):
         # 처리된 데이터를 CSV 파일로 저장
         output_file = os.path.join(self.output_dir, f'preprocessed_reviews_imdb.csv')
         self.data.to_csv(output_file, index=False)
-        print(f"Processed data saved to {output_file}")
+        print(f"Processed data saved to {output_file}", encoding='UTF-8-sig')
+
+    def preprocess_entity(self, entity: dict) -> dict:
+        required_fields = ['title', 'content', 'date']
+        
+
+        for field in required_fields:
+            if field not in entity or entity[field] is None or \
+                (isinstance(entity[field], str) and entity[field].strip() == ""):
+                return None
+
+        try:
+            star_rating = float(entity['star_rating'])
+        except (ValueError, TypeError):
+            return None
+
+        
+        if not (1 <= star_rating <= 10):
+            return None
+        
+        if len(entity['content']) <= 5:
+            return None
+        
+        
+        processed_entity = entity.copy()
+
+        try:
+            processed_entity['date'] = datetime.datetime.strptime(
+                processed_entity["date"], '%b %d, %Y'
+            )
+        except ValueError:
+            pass
+
+        return processed_entity

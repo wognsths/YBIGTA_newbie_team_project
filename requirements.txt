@@ -17,3 +17,13 @@ starlette==0.41.3
 tomli==2.2.1
 typing_extensions==4.12.2
 uvicorn==0.34.0
+pandas==1.5.3
+numpy==1.23.5
+scikit-learn==1.2.2
+tqdm==4.64.1
+mysql-connector-python==8.0.33
+python-dotenv==1.0.0
+httpx==0.24.0
+sqlalchemy==2.0.25
+pymysql==1.1.1
+pymongo[srv]==4.3.3

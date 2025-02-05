@@ -4,9 +4,10 @@ import numpy as np
 import re
 
 from tqdm import tqdm
-from sentence_transformers import SentenceTransformer, util
+# from sentence_transformers import SentenceTransformer, util
+import datetime
 
-from sklearn.metrics.pairwise import cosine_similarity
+# from sklearn.metrics.pairwise import cosine_similarity
 
 import os
 
@@ -16,7 +17,8 @@ warnings.simplefilter(action='ignore', category=FutureWarning)
 class NaverProcessor(BaseDataProcessor):
     def __init__(self, input_path: str, output_path: str):
         super().__init__(input_path, output_path)
-        self.df = pd.read_csv(input_path)
+        if input_path != "": 
+            self.df = pd.read_csv(input_path)
         self.embeddings = []
 
     def preprocess(self):
@@ -233,4 +235,70 @@ class NaverProcessor(BaseDataProcessor):
         
         # 저장 완료 메시지 출력
         print(f"데이터가 성공적으로 저장되었습니다: {output_path}")
+
+    def preprocess_entity(self, entity: dict) -> dict:
+        """
+        단일 네이버 리뷰 entity에 대한 전처리를 수행하는 메서드.
+        아래 처리를 수행합니다.
+        
+          1. 별점 전처리:
+             - 문자열에서 12번째 인덱스 이후의 숫자만 추출하여 정수형(int)으로 변환
+          2. 작성일자 전처리:
+             - 작성일자(writing_date)를 datetime 형식으로 변환한 후, 날짜(date)만 추출
+          3. 텍스트(comment) 전처리:
+             - 리뷰 텍스트에서 불필요한 특수문자 제거 (숫자와 한글은 보존)
+          4. 결측치(null) 처리:
+             - 필수 필드(별점, 작성일자, comment)가 없거나, comment가 빈 문자열이면 전처리 대상에서 제외
+          5. 이상치(outlier) 처리:
+             - bulk 전처리에서는 리뷰 길이가 (평균 + 2.5 * 표준편차)를 초과하면 가장 긴 문장만 남기지만,
+               단일 entity의 경우 표본이 1이므로(표준편차=0) 조건에 해당하지 않습니다.
+               (코드상 포함되어 있어 추후 여러 entity를 함께 처리할 때 활용 가능)
+
+        Args:
+            entity (dict): 전처리할 단일 리뷰 entity. 예:
+                           {
+                             "star_rating": "별점 : 8",
+                             "writing_date": "2020-02-28",
+                             "comment": "이 영화는 정말 훌륭했습니다! 다만...",
+                             ... 기타 필드 ...
+                           }
+
+        Returns:
+            dict: 전처리된 리뷰 entity. 필수 조건 미달 시 None 반환.
+        """
+        required_fields = ["comment"]
+        # 결측치 처리: 필수 필드가 없거나 빈 문자열이면 전처리하지 않음
+        for field in required_fields:
+            if field not in entity or not entity[field].strip():
+                return None
+
+        processed_entity = entity.copy()
+
+        # 1.1. 별점 전처리: 12번째 인덱스 이후의 부분을 정수형으로 변환
+        try:
+            processed_entity["star_rating"] = int(processed_entity["star_rating"][12:])
+        except Exception as e:
+            return None
+        
+        # 1.2. 추천 수 전처리: 문자형 -> 정수형
+        try:
+            processed_entity["upvote"] = int(processed_entity["upvote"])
+            processed_entity["downvote"] = int(processed_entity["downvote"])
+        except Exception as e:
+            return None
+
+        # 2. 작성일자 전처리: datetime 형식으로 변환한 후, 날짜(date)만 추출
+        try:
+            dt_str = processed_entity["writing_date"].strip() if "writing_date" in entity else None
+            processed_entity["writing_date"] = datetime.datetime.strptime(dt_str, '%Y.%m.%d. %H:%M') if dt_str else None
+        except:
+            processed_entity["writing_date"] = None
+
+        # 3. 텍스트 데이터 전처리: 불필요한 특수문자 제거 (숫자 및 한글 보존)
+        try:
+            processed_entity["comment"] = re.sub(r"[^0-9ㄱ-ㅎㅏ-ㅣ가-힣 ]", "", processed_entity["comment"])
+        except:
+            pass
+        
+        return processed_entity
 
