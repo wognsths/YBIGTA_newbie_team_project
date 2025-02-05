@@ -1,4 +1,5 @@
 review_analysis/crawling/get_db.ipynb
+review_analysis/preprocessing/analysis.ipynb
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
