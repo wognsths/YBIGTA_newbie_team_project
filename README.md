@@ -217,6 +217,17 @@ IMDb의 경우 요일과 리뷰 개수와의 상관관계가 유의미하다고 
 ## docker hub 주소
 https://hub.docker.com/r/manfromearth11/ybigta6
 
+## api 실행 방법
+1. 도커 실행 & 이미지 Pull
+docker pull manfromearth11/ybigta6:latest
+
+2. 상태 확인
+docker stop ybigta6_container
+docker rm ybigta6_container
+
+3. 실행
+docker run -d —platform linux/amd64 —name ybigta6_container -p 8000:8000 —env-file .env manfromearth11/ybigta6:latest
+
 ## aws 
 <img src="aws/register.png" width="600">
 <img src="aws/login.png" width="600">
