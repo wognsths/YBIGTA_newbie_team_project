@@ -211,3 +211,14 @@ IMDb의 경우 요일과 리뷰 개수와의 상관관계가 유의미하다고 
 1. 터미널 위치를 crawling 폴더로 이동
 2. python main.py -o ../../database --all
 
+# python 버전
+반드시 3.11.9 버전으로 고정!!!
+
+## aws 
+<img src="aws/register.png" width="600">
+<img src="aws/login.png" width="600">
+<img src="aws/update-password.png" width="600">
+<img src="aws/preprocess.png" width="600">
+<img src="aws/delete.png" width="600">
+<img src="aws/github_action.png" width="600">
+
