@@ -40,4 +40,4 @@ jobs:
             docker pull ${{ secrets.DOCKERHUB_USERNAME }}/ybigta:latest
             docker stop ybigta6 || true
             docker rm ybigta6 || true
-            docker run -d -p 8000:8000 --name ybigta6 ${{ secrets.DOCKERHUB_USERNAME }}/ybigta6:latest
+            docker run -d -p 8080:8080 --name ybigta6 ${{ secrets.DOCKERHUB_USERNAME }}/ybigta6:latest
