@@ -214,6 +214,9 @@ IMDb의 경우 요일과 리뷰 개수와의 상관관계가 유의미하다고 
 # python 버전
 반드시 3.11.9 버전으로 고정!!!
 
+## docker hub 주소
+https://hub.docker.com/r/manfromearth11/ybigta6
+
 ## aws 
 <img src="aws/register.png" width="600">
 <img src="aws/login.png" width="600">
@@ -221,4 +224,3 @@ IMDb의 경우 요일과 리뷰 개수와의 상관관계가 유의미하다고 
 <img src="aws/preprocess.png" width="600">
 <img src="aws/delete.png" width="600">
 <img src="aws/github_action.png" width="600">
-
