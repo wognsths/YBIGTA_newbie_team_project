@@ -1,0 +1,43 @@
+name: Deploy to EC2
+
+on:
+  push:
+    branches:
+      - jhshon_code
+
+jobs:
+  build_and_push:
+    name: Build and Push Docker Image
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+      
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v3
+        with:
+          context: .
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/ybigta:latest
+          push: true
+
+  deploy_to_ec2:
+    name: Deploy to EC2
+    runs-on: ubuntu-latest
+    needs: build_and_push
+    steps:
+      - name: Deploy using SSH
+        uses: appleboy/ssh-action@v0.1.8
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            docker pull ${{ secrets.DOCKERHUB_USERNAME }}/ybigta:latest
+            docker stop ybigta || true
+            docker rm ybigta || true
+            docker run -d -p 8000:8000 --name ybigta ${{ secrets.DOCKERHUB_USERNAME }}/ybigta:latest
